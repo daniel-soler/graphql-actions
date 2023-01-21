@@ -31,16 +31,19 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_TOKEN
     
     - name: Build docker image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker build -t dsolertejada/docker-grahql:$NEW_VERSION .
         docker build -t dsolertejada/docker-grahql:latest .
       
     - name: Push docker image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker push dsolertejada/docker-grahql:$NEW_VERSION
         docker push dsolertejada/docker-grahql:latest
