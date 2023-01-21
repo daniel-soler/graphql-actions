@@ -23,7 +23,14 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-      run: docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+      run: docker login --user $DOCKER_USER --password-stdin $DOCKER_TOKEN
+    
+    - name: Build docker image
+      run: docker build -t dsolertejada/docker-grahql:0.0.1 .
       
+    - name: Push docker image
+      run: docker push dsolertejada/docker-grahql:0.0.1
+    
+    
 #     - name: Build the Docker image
 #       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
