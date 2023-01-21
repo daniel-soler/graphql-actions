@@ -34,18 +34,16 @@ jobs:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-        echo "New version: $NEW_VERSION !!!!!!!!!"
     
-    
-#     - name: Build docker image
-#       run: |
-#         docker build -t dsolertejada/docker-grahql:0.0.1 .
-#         docker build -t dsolertejada/docker-grahql:latest .
+    - name: Build docker image
+      run: |
+        docker build -t dsolertejada/docker-grahql:$NEW_VERSION .
+        docker build -t dsolertejada/docker-grahql:latest .
       
-#     - name: Push docker image
-#       run: |
-#         docker push dsolertejada/docker-grahql:0.0.1
-#         docker push dsolertejada/docker-grahql:latest
+    - name: Push docker image
+      run: |
+        docker push dsolertejada/docker-grahql:$NEW_VERSION
+        docker push dsolertejada/docker-grahql:latest
     
     
 #     - name: Build the Docker image
